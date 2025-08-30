@@ -3,122 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bangla Font Search System</title>
+<title>Bangla Font Search</title>
 <style>
-  /* সাধারণ বডি স্টাইল */
-  body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to right, #f6f9fc, #e9eff5);
-    margin: 0;
-    padding: 0;
-  }
-
-  /* হেডার */
-  header {
-    background: #007bff;
-    color: white;
-    text-align: center;
-    padding: 25px 0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  }
-
-  header h1 {
-    margin: 0;
-    font-size: 32px;
-    letter-spacing: 1px;
-  }
-
-  /* সার্চ সেকশন */
-  .search {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 20px;
-    flex-wrap: wrap;
-  }
-
-  .search input[type="text"], .search input[type="file"] {
-    padding: 10px 15px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    outline: none;
-    transition: all 0.3s;
-  }
-
-  .search input[type="text"]:focus, .search input[type="file"]:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 10px rgba(0,123,255,0.2);
-  }
-
-  /* ফন্ট গ্রিড */
-  #fontGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 20px;
-  }
-
-  /* ফন্ট কার্ড */
-  .font-card {
-    background: white;
-    border-radius: 12px;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-
-  .font-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-  }
-
-  .font-sample {
-    margin-top: 10px;
-    font-size: 24px;
-    min-height: 50px;
-    color: #333;
-  }
-
-  .font-card img {
-    max-width: 100%;
-    border-radius: 8px;
-    margin-bottom: 10px;
-  }
-
-  .font-card a {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 6px 12px;
-    background: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 6px;
-    transition: background 0.3s;
-  }
-
-  .font-card a:hover {
-    background: #0056b3;
-  }
-
-  .font-email {
-    margin-top: 5px;
-    font-size: 14px;
-    color: #555;
-  }
-
-  /* রেসপন্সিভ টেক্সট ইনপুট */
-  @media(max-width: 500px){
-    .search {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .search input[type="text"], .search input[type="file"] {
-      width: 90%;
-    }
-  }
+  body { font-family: Arial, sans-serif; background: linear-gradient(to right, #f6f9fc, #e9eff5); margin:0; padding:0; }
+  header { background: #007bff; color: white; text-align: center; padding: 25px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  header h1 { margin:0; font-size:32px; letter-spacing:1px; }
+  .search { display:flex; justify-content:center; gap:15px; margin:20px; flex-wrap:wrap; }
+  .search input[type="text"], .search input[type="file"] { padding:10px 15px; font-size:16px; border-radius:8px; border:1px solid #ccc; outline:none; transition: all 0.3s; }
+  .search input[type="text"]:focus, .search input[type="file"]:focus { border-color:#007bff; box-shadow:0 0 10px rgba(0,123,255,0.2); }
+  #fontGrid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:20px; padding:20px; }
+  .font-card { background:white; border-radius:12px; padding:15px; text-align:center; box-shadow:0 6px 15px rgba(0,0,0,0.08); transition: transform 0.3s, box-shadow 0.3s; }
+  .font-card:hover { transform:translateY(-5px); box-shadow:0 12px 25px rgba(0,0,0,0.15); }
+  .font-sample { margin-top:10px; font-size:24px; min-height:50px; color:#333; }
+  .font-card a { display:inline-block; margin-top:10px; padding:6px 12px; background:#007bff; color:white; text-decoration:none; border-radius:6px; transition: background 0.3s; }
+  .font-card a:hover { background:#0056b3; }
+  @media(max-width:500px){ .search { flex-direction:column; align-items:center; } .search input[type="text"], .search input[type="file"] { width:90%; } }
 </style>
 </head>
 <body>
@@ -134,6 +33,59 @@
 
 <section id="fontGrid"></section>
 
-<script src="script.js"></script>
+<script>
+const fonts = [
+  "Alipi","Anan","Arial Khan MJ","ARIALBD","ATRAIMJ","BhairabMJ","BHRAMBI",
+  "BongshaliMJ","BOOKOSBI","Brahmaputra","BurigangaMJ","CHANE","ChitraMJ",
+  "DHAKCB","DhanshiriMJ","DHOLO","GangaMJ","GangaSagarMJ","Golap","GOTHIC",
+  "HaldaMJ","JaJaDiMJ","JugantorMJ","Kakuk","KalindiMJ","KumarkhaliMJ",
+  "Madhob","MeghnaMJ","ModhumatiMJ","NobogongaMJ","PairaMJ","PALASHMJ",
+  "Pandulip","Parao","RupshaMJ","ShaldaMJ","ShurmaMj","SutonnyMJ",
+  "TonnyBanglaMJ","UrmeeMJ"
+];
+
+function loadFonts() {
+  fonts.forEach(f => {
+    const src = `./fonts/${f.replace(/\s+/g,'')}.ttf`; // স্পেস রিমুভ করে ফাইল লিঙ্ক
+    const fontFace = new FontFace(f, `url(${src})`);
+    document.fonts.add(fontFace);
+    fontFace.load();
+  });
+}
+
+function renderFonts(query) {
+  const grid = document.getElementById('fontGrid');
+  grid.innerHTML = '';
+  const text = document.getElementById('textInput').value || "বাংলা টেক্সট";
+
+  fonts.filter(f => !query || f.toLowerCase().includes(query.toLowerCase()))
+       .forEach(f => {
+         const card = document.createElement('div');
+         card.className = 'font-card';
+
+         const sample = document.createElement('div');
+         sample.className = 'font-sample';
+         sample.textContent = text;
+         sample.style.fontFamily = f;
+         card.appendChild(sample);
+
+         const a = document.createElement('a');
+         a.href = `./fonts/${f.replace(/\s+/g,'')}.ttf`;
+         a.download = '';
+         a.textContent = "ডাউনলোড";
+         card.appendChild(a);
+
+         grid.appendChild(card);
+       });
+}
+
+document.getElementById('textInput').addEventListener('input', () => renderFonts(''));
+document.getElementById('imageInput').addEventListener('change', e => {
+  alert('ছবি থেকে ফন্ট শনাক্ত করতে API প্রয়োজন। বর্তমানে UI আছে।');
+});
+
+window.onload = () => { loadFonts(); renderFonts(''); };
+</script>
+
 </body>
 </html>
