@@ -1,48 +1,54 @@
+
 const fonts = [
   {family: "SolaimanLipi", src: "./fonts/SolaimanLipi.ttf", free: true},
   {family: "Nikosh", src: "./fonts/Nikosh.ttf", free: true},
   {family: "Siyam Rupali", src: "./fonts/SiyamRupali.ttf", free: true},
-  {family: "PremiumFont1", img: "./images/premium1.png", free: false},
-
-  // নতুন ফন্টগুলো
-  {family: "Alipi", src: "./fonts/Alipi.ttf", free: true},
-  {family: "Anan", src: "./fonts/Anan.ttf", free: true},
-  {family: "Arial Khan MJ", src: "./fonts/ArialKhanMJ.ttf", free: true},
-  {family: "ARIALBD", src: "./fonts/ARIALBD.ttf", free: true},
-  {family: "ATRAIMJ", src: "./fonts/ATRAIMJ.ttf", free: true},
-  {family: "BhairabMJ", src: "./fonts/BhairabMJ.ttf", free: true},
-  {family: "BHRAMBI", src: "./fonts/BHRAMBI.ttf", free: true},
-  {family: "BongshaliMJ", src: "./fonts/BongshaliMJ.ttf", free: true},
-  {family: "BOOKOSBI", src: "./fonts/BOOKOSBI.ttf", free: true},
-  {family: "Brahmaputra", src: "./fonts/Brahmaputra.ttf", free: true},
-  {family: "BurigangaMJ", src: "./fonts/BurigangaMJ.ttf", free: true},
-  {family: "CHANE", src: "./fonts/CHANE.ttf", free: true},
-  {family: "ChitraMJ", src: "./fonts/ChitraMJ.ttf", free: true},
-  {family: "DHAKCB", src: "./fonts/DHAKCB.ttf", free: true},
-  {family: "DhanshiriMJ", src: "./fonts/DhanshiriMJ.ttf", free: true},
-  {family: "DHOLO", src: "./fonts/DHOLO.ttf", free: true},
-  {family: "GangaMJ", src: "./fonts/GangaMJ.ttf", free: true},
-  {family: "GangaSagarMJ", src: "./fonts/GangaSagarMJ.ttf", free: true},
-  {family: "Golap", src: "./fonts/Golap.ttf", free: true},
-  {family: "GOTHIC", src: "./fonts/GOTHIC.ttf", free: true},
-  {family: "HaldaMJ", src: "./fonts/HaldaMJ.ttf", free: true},
-  {family: "JaJaDiMJ", src: "./fonts/JaJaDiMJ.ttf", free: true},
-  {family: "JugantorMJ", src: "./fonts/JugantorMJ.ttf", free: true},
-  {family: "Kakuk", src: "./fonts/Kakuk.ttf", free: true},
-  {family: "KalindiMJ", src: "./fonts/KalindiMJ.ttf", free: true},
-  {family: "KumarkhaliMJ", src: "./fonts/KumarkhaliMJ.ttf", free: true},
-  {family: "Madhob", src: "./fonts/Madhob.ttf", free: true},
-  {family: "MeghnaMJ", src: "./fonts/MeghnaMJ.ttf", free: true},
-  {family: "ModhumatiMJ", src: "./fonts/ModhumatiMJ.ttf", free: true},
-  {family: "NobogongaMJ", src: "./fonts/NobogongaMJ.ttf", free: true},
-  {family: "PairaMJ", src: "./fonts/PairaMJ.ttf", free: true},
-  {family: "PALASHMJ", src: "./fonts/PALASHMJ.ttf", free: true},
-  {family: "Pandulip", src: "./fonts/Pandulip.ttf", free: true},
-  {family: "Parao", src: "./fonts/Parao.ttf", free: true},
-  {family: "RupshaMJ", src: "./fonts/RupshaMJ.ttf", free: true},
-  {family: "ShaldaMJ", src: "./fonts/ShaldaMJ.ttf", free: true},
-  {family: "ShurmaMj", src: "./fonts/ShurmaMj.ttf", free: true},
-  {family: "SutonnyMJ", src: "./fonts/SutonnyMJ.ttf", free: true},
-  {family: "TonnyBanglaMJ", src: "./fonts/TonnyBanglaMJ.ttf", free: true},
-  {family: "UrmeeMJ", src: "./fonts/UrmeeMJ.ttf", free: true}
+  {family: "PremiumFont1", img: "./images/premium1.png", free: false}
 ];
+
+function loadFonts() {
+  fonts.forEach(f => {
+    if(f.src) {
+      const fontFace = new FontFace(f.family, `url(${f.src})`);
+      document.fonts.add(fontFace);
+      fontFace.load();
+    }
+  });
+}
+
+function renderFonts(query) {
+  const grid = document.getElementById('fontGrid');
+  grid.innerHTML = '';
+  const text = document.getElementById('textInput').value || "বাংলা টেক্সট";
+  fonts.filter(f => !query || f.family.toLowerCase().includes(query.toLowerCase()))
+       .forEach(f => {
+         const card = document.createElement('div');
+         card.className = 'font-card';
+         const sample = document.createElement('div');
+         sample.className = 'font-sample';
+         sample.textContent = text;
+         if(f.src) sample.style.fontFamily = f.family;
+         if(!f.free && f.img) {
+           const img = document.createElement('img');
+           img.src = f.img;
+           img.style.width = '100%';
+           card.appendChild(img);
+         }
+         card.appendChild(sample);
+         if(f.free && f.src) {
+           const a = document.createElement('a');
+           a.href = f.src;
+           a.download = '';
+           a.textContent = "ডাউনলোড";
+           card.appendChild(a);
+         }
+         grid.appendChild(card);
+       });
+}
+
+document.getElementById('textInput').addEventListener('input', () => renderFonts(''));
+document.getElementById('imageInput').addEventListener('change', e => {
+  alert('ছবি থেকে ফন্ট শনাক্ত করতে API ইন্টিগ্রেশন প্রয়োজন। বর্তমানে শুধুমাত্র UI আছে।');
+});
+
+window.onload = () => { loadFonts(); renderFonts(''); };
